@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+  <h2>Summary</h2>
+
+  {% if stats %}
+
+  <!-- Stat boxes -->
+  <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:28px;">
+
+    <div style="flex:1; min-width:160px; background:#1e3a5f; color:#fff; border-radius:8px; padding:20px; text-align:center;">
+      <div style="font-size:34px; font-weight:700;">{{ stats.total }}</div>
+      <div style="font-size:13px; margin-top:4px;">Total Employees</div>
+    </div>
+
+    <div style="flex:1; min-width:160px; background:#28a745; color:#fff; border-radius:8px; padding:20px; text-align:center;">
+      <div style="font-size:26px; font-weight:700;">Rs {{ "%.0f"|format(stats.avg) }}</div>
+      <div style="font-size:13px; margin-top:4px;">Average Salary</div>
+    </div>
+
+    <div style="flex:1; min-width:160px; background:#fd7e14; color:#fff; border-radius:8px; padding:20px; text-align:center;">
+      <div style="font-size:22px; font-weight:700;">{{ stats.highest.name }}</div>
+      <div style="font-size:13px; margin-top:4px;">Highest Salary — Rs {{ "%.0f"|format(stats.highest.salary) }}</div>
+    </div>
+
+    <div style="flex:1; min-width:160px; background:#6c757d; color:#fff; border-radius:8px; padding:20px; text-align:center;">
+      <div style="font-size:22px; font-weight:700;">{{ stats.lowest.name }}</div>
+      <div style="font-size:13px; margin-top:4px;">Lowest Salary — Rs {{ "%.0f"|format(stats.lowest.salary) }}</div>
+    </div>
+
+  </div>
+
+  <!-- Department breakdown -->
+  <h3 style="margin-bottom:12px; color:#1e3a5f;">Employees per Department</h3>
+  <table>
+    <thead>
+      <tr><th>Department</th><th>Count</th></tr>
+    </thead>
+    <tbody>
+      {% for dept, count in stats.depts.items() %}
+      <tr>
+        <td>{{ dept }}</td>
+        <td>{{ count }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+    <p class="no-data">No employees added yet. Go to <a href="/add">Add Employee</a> to get started.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

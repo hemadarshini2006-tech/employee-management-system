@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+  <h2>All Employees
+    <a href="/add" class="btn btn-green" style="float:right; font-size:13px;">+ Add New</a>
+  </h2>
+
+  {% if employees %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Position</th>
+        <th>Salary (Rs)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for emp in employees %}
+      <tr>
+        <td>{{ emp.id }}</td>
+        <td>{{ emp.name }}</td>
+        <td>{{ emp.department }}</td>
+        <td>{{ emp.position }}</td>
+        <td>{{ "%.2f"|format(emp.salary) }}</td>
+        <td>
+          <a href="/edit/{{ emp.id }}" class="btn btn-orange">Edit</a>
+          &nbsp;
+          <a href="/delete/{{ emp.id }}"
+             class="btn btn-red"
+             onclick="return confirm('Delete {{ emp.name }}?')">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="no-data">No employees yet. Click "Add New" to get started!</p>
+  {% endif %}
+</div>
+
+{% endblock %}
